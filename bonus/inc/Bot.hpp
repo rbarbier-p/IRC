@@ -6,10 +6,10 @@
 class Bot
 {
 	private :
-		Bot();
-		~Bot();
 	public :
-		void	run();
+		Bot(void);
+		~Bot(void);
+		void	run(void);
 };
 
 #endif /*BOT_HPP*/

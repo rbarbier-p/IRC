@@ -125,7 +125,7 @@ $(OBJS_PATH)/%.o: $(SRCS_PATH)/%.cpp
 bonus: bot_banner bot
 
 bot: $(OBJS_BONUS)
-	@$(call compile,$(CC) $(CFLAGS) $< -o bot)
+	@$(call compile,$(CC) $(CFLAGS) $^ -o bot)
 
 $(OBJS_PATH)/%.o: $(SRC_BONUS_PATH)/%.cpp
 	@mkdir -p $(dir $@)
@@ -137,7 +137,7 @@ clean: banner
 
 fclean: banner clean
 	@rm -rf $(NAME)
-	@rm -rf $(bot)
+#	@rm -rf $(bot)
 	@printf "%-53b%b" "$(CYAN)$(@):" "$(GREEN)[✓]$(RESET)\n"
 
 re: fclean all
