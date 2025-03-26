@@ -12,18 +12,21 @@ void Bot::run(void)
 	sock = initConnection();
 	if (sock < 0)
 		return ;
+    const char* message1 = "PASS pass\nUSER a a a a\nNICK bender\n";
+	send(sock, message1, strlen(message1), 0);
 	while(42)
 		listenServer(sock);
 }
 
 void Bot::listenServer(int sock)
 {
-	if (listen(sock, 10) < 0)
-	{
-		std::cerr << "Can't listen on Socket: " << strerror(errno) << "!\n"; 
-		close(sock);
-		exit(EXIT_FAILURE);
-	}
+	// if (listen(sock, 10) < 0)
+	(void)sock;
+	// {
+	// 	std::cerr << "Can't listen on Socket: " << strerror(errno) << "!\n"; 
+	// 	close(sock);
+	// 	exit(EXIT_FAILURE);
+// }	
 }
 
 int Bot::initConnection(void)
