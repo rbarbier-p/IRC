@@ -10,6 +10,7 @@
 # include <sys/types.h>
 # include <arpa/inet.h>
 # include <netinet/in.h>
+# include "Timer.hpp"
 
 # define NICK "Bender" //comentar a rene que pasa si el bot esta siendo usando
 # define USER "botsito 0 * :bender"
@@ -35,6 +36,8 @@ class Bot
 	private :
 		struct sockaddr_in 	addr_;
 		std::string			pass_;
+		std::string			nick_;
+		const std::string	user_;
 
 		int initConnection(void);	
 		void listenServer(int sock);	
@@ -52,7 +55,11 @@ class Bot
 		void	run(void);
 		
 		struct sockaddr_in getAddr(void) const;
+		std::string getPass() const;
+		std::string getUser() const;
+		std::string getNick() const;
 		//setters
+		void setNick(std::string nick);
 		void setPass(std::string pass);
 		void setIp(struct in_addr sin_addr);
 		void setPort(unsigned short sin_port);

@@ -12,21 +12,64 @@ void Bot::run(void)
 	sock = initConnection();
 	if (sock < 0)
 		return ;
-    const char* message1 = "PASS pass\nUSER a a a a\nNICK bender\n";
-	send(sock, message1, strlen(message1), 0);
+	std::string str = "PASS " + this->pass_ + "\nUSER a a a a\nNICK " + this->nick_ + "\n";
+	const char* msg = str.c_str();
+	send(sock, msg, strlen(msg), 0);
 	while(42)
 		listenServer(sock);
 }
 
-void Bot::listenServer(int sock)
+int myAtoi(const std::string& str)
 {
-	// if (listen(sock, 10) < 0)
-	(void)sock;
-	// {
-	// 	std::cerr << "Can't listen on Socket: " << strerror(errno) << "!\n"; 
-	// 	close(sock);
-	// 	exit(EXIT_FAILURE);
-// }	
+    std::stringstream ss(str);
+    int result;
+    ss >> result;  // Extracts the integer from the string
+    return result;
+}
+
+int Bot::parser(std::string str)
+{
+	size_t msg_start = str.find(":", 1);
+	if (msg_start == std::npos || msg_start + 1 < size(str))	
+		return -1;
+
+	std::string tag = str.substr(msg_start + 1, str.find(" ", str.find(":", 1)));
+	for (char c : tag)
+		if (!std::isalpha(c) && c != '_')
+			return -1;
+
+	if (size(tag) > 20) 
+		return -1;
+
+	std::string time = str.substr(str.find(" ", str.find(":", 1)) + 1)
+	if (size(time) > 2 || time.find_first_not_of("0123456789") != std::npos)
+		return -1;
+	
+	return 0;
+}
+
+void Bot::listenServer(int sock, std::vector<Timer> timers)
+{
+	int readlen;
+	char buff[100]; //BUFFERSIZE
+
+	readlen = read(sock, buff, sizeof(buff));	
+	if (readlen < 0)
+		exit(1);
+	if (readlen == 0)
+		return ;
+	std::string str(buff);
+	if (str.find("PRIVMSG") == std::npos)
+		return ; // send nothing
+	if (parser(str) == -1)
+		return ; // send error message to user
+
+	Timer new_timer();
+	new_timer.setTimerTag(str.substr(str.find_last_of(" "));
+	new_timer.setTimerTime(myAtoi(str.substr(str.find(":", 1) + 1, str.find_last_of(" "))));
+	new_timer.setUserName(str.substr(1, std.find("!")));
+	new_timer.setStartedTime(clock());
+	timers.push_back(new_timer);
 }
 
 int Bot::initConnection(void)
@@ -52,6 +95,11 @@ int Bot::initConnection(void)
 struct sockaddr_in Bot::getAddr(void) const
 {
 	return (this->addr_);
+}
+
+void	Bot::setNick(std::string nick)
+{
+	this->nick_ = nick;
 }
 
 void	Bot::setPass(std::string pass)

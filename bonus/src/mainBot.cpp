@@ -32,13 +32,14 @@ static void parse(Bot &bot, char *av[])
 	bot.setPort(htons(port_parse(av[2])));
 	bot.setFamily(AF_INET);
 	bot.setPass(av[3]);
+	bot.setNick(av[4]);
 }
 
 int main(int ac, char *av[])
 {
-	if (ac != 4)
+	if (ac != 5)
 	{
-		std::cout << "Usage: " << av[0] << " <ip> <port> <password> \n";
+		std::cout << "Usage: " << av[0] << " <ip> <port> <password> <nick>\n";
 		return (1);
 	}
 	Bot bender;
