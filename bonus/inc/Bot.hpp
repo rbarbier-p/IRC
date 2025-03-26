@@ -1,7 +1,18 @@
 #ifndef BOT_HPP
 # define BOT_HPP
 
+# include <cerrno>
+# include <cstring>
+# include <fstream>
+# include <unistd.h>
+# include <stdlib.h>
 # include <iostream>
+# include <sys/types.h>
+# include <arpa/inet.h>
+# include <netinet/in.h>
+
+# define NICK "Bender" //comentar a rene que pasa si el bot esta siendo usando
+# define USER "botsito 0 * :bender"
 
 class Bot
 {
@@ -22,6 +33,11 @@ class Bot
 	//pasarle nuestro socket la ip que conectamos y el size de la struct 
 	//y ya en principio estaria hecha la conexion.
 	private :
+		struct sockaddr_in 	addr_;
+		std::string			pass_;
+
+		int initConnection(void);	
+		void listenServer(int sock);	
 		//necesita una estructura sockaddr_in necesito setear esa estructura 
 		//conectarme al puerto y a la ip que me pasen por parametro.
 		//necesito un socket
@@ -32,7 +48,15 @@ class Bot
 	public :
 		Bot(void);
 		~Bot(void);
+
 		void	run(void);
+		
+		struct sockaddr_in getAddr(void) const;
+		//setters
+		void setPass(std::string pass);
+		void setIp(struct in_addr sin_addr);
+		void setPort(unsigned short sin_port);
+		void setFamily(short sin_family);
 };
 
 #endif /*BOT_HPP*/

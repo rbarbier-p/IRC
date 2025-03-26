@@ -108,6 +108,7 @@ bot_banner:
 	@echo "      _|__|____|___|_/      L"
 	@echo "     |                      L"
 	@echo "     |____________________M-K"
+	@echo
 	@printf "%b" "$(YELLOW)Name:           $(CYAN)$(NAME)\n$(RESET)"
 	@printf "%b" "$(YELLOW)CC:             $(CYAN)$(CC)\n$(RESET)"
 	@printf "%b" "$(YELLOW)Flags:          $(CYAN)$(CFLAGS)\n$(RESET)"
