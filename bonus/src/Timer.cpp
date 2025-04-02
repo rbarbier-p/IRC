@@ -1,7 +1,6 @@
 #include "Timer.hpp"
 
-Timer::Timer(std::string timer_tag, std::string user_name, int delay_time, int started_time) 
-	: timer_tag_(timer_tag), user_name_(user_name), timer_time_(timer_time), started_time_(started_time)
+Timer::Timer()
 {
 }
 
@@ -27,4 +26,24 @@ int Timer::getTimerTime() const
 int Timer::getStartedTime() const
 {
 	return this->started_time_;
+}
+
+void Timer::setTimerTag(std::string timer_tag)
+{
+	this->timer_tag_ = timer_tag;
+}
+
+void Timer::setUserName(std::string user_name)
+{
+	this->user_name_ = user_name;
+}
+
+void Timer::setTimerTime(int timer_time)
+{
+	this->timer_time_ = timer_time;
+}
+
+void Timer::setStartedTime(int started_time)
+{
+	this->started_time_ = started_time;
 }

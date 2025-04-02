@@ -23,7 +23,7 @@ INCLUDE_BONUS_PATH   = $(BONUS_PATH)/inc
 INCLUDE_PATH = ./include
 
 SRCS         = Channel.cpp Cmd.cpp Log.cpp Membership.cpp Server.cpp Client.cpp Conn.cpp Parser.cpp Sig.cpp
-SRCS_BONUS   = mainBot.cpp Bot.cpp 
+SRCS_BONUS   = mainBot.cpp Bot.cpp Timer.cpp
 MAIN         = main.cpp
 
 ################################################################################

@@ -10,19 +10,24 @@
 class Timer 
 {
 	private:
-		const std::string	timer_tag_;
-		const std::string	user_name_;
-		const int			timer_time_;
-		const int			started_time_;
+		std::string	timer_tag_;
+		std::string	user_name_;
+		int			timer_time_;
+		int			started_time_;
 
 	public:
-		Timer(std::string timer_tag, std::string client_name, int delay_time, int started_time);
+		Timer();
 		~Timer();
 
 		std::string	getTimerTag() const;
 		std::string	getUserName() const;
 		int 		getTimerTime() const;
 		int			getStartedTime() const;
+
+		void setTimerTag(std::string timer_tag);
+		void setUserName(std::string user_name);
+		void setTimerTime(int timer_time);
+		void setStartedTime(int started_time);
 };
 
 #endif

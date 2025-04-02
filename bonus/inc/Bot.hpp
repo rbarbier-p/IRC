@@ -10,10 +10,14 @@
 # include <sys/types.h>
 # include <arpa/inet.h>
 # include <netinet/in.h>
+# include <vector>
+# include <sstream>
 # include "Timer.hpp"
 
 # define NICK "Bender" //comentar a rene que pasa si el bot esta siendo usando
 # define USER "botsito 0 * :bender"
+
+class Timer;
 
 class Bot
 {
@@ -38,9 +42,13 @@ class Bot
 		std::string			pass_;
 		std::string			nick_;
 		const std::string	user_;
+		std::vector<Timer > timers;
+		int 				sock;
 
 		int initConnection(void);	
-		void listenServer(int sock);	
+		void listenServer(void);	
+		void checkTimers(void);
+		int parser(std::string str);
 		//necesita una estructura sockaddr_in necesito setear esa estructura 
 		//conectarme al puerto y a la ip que me pasen por parametro.
 		//necesito un socket
