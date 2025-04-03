@@ -12,57 +12,38 @@
 # include <netinet/in.h>
 # include <vector>
 # include <sstream>
+# include <poll.h>
+#include <fcntl.h>
+#include <unistd.h>
 # include "Timer.hpp"
 
-# define NICK "Bender" //comentar a rene que pasa si el bot esta siendo usando
+# define NICK "Bender" 
 # define USER "botsito 0 * :bender"
-
-class Timer;
 
 class Bot
 {
-	//mensaje para dei del futuro :
-	//
-	//el servidor hace un socket luego un bind a la ip que queremos 
-
-	//mensaje para dei del futuro :
-	//
-	//el servidor hace un socket luego un bind a la ip que queremos 
-	//luego se queda escuchando desde el puerto habilitado
-	//si nosotros queremos conectarnos al server debemos crear un socket
-	//y luego utilizar la funcion connect
-	//pasarle nuestro socket la ip que conectamos y el size de la struct 
-	//y ya en principio estaria hecha la conexion.//luego se queda escuchando desde el puerto habilitado
-	//si nosotros queremos conectarnos al server debemos crear un socket
-	//y luego utilizar la funcion connect
-	//pasarle nuestro socket la ip que conectamos y el size de la struct 
-	//y ya en principio estaria hecha la conexion.
 	private :
 		struct sockaddr_in 	addr_;
+		const std::string	user_;
 		std::string			pass_;
 		std::string			nick_;
-		const std::string	user_;
 		std::vector<Timer > timers;
-		int 				sock;
+		int					sock_fd;
 
-		int initConnection(void);	
 		void listenServer(void);	
 		void checkTimers(void);
+		void processMsg(const char *buff);
+		int initConnection(void);	
 		int parser(std::string str);
-		//necesita una estructura sockaddr_in necesito setear esa estructura 
-		//conectarme al puerto y a la ip que me pasen por parametro.
-		//necesito un socket
-		//sin_family -> familia de direcciones se usa AF_INET para ipv4
-		//sin_port -> puerto
-		//sin_addr -> ipv4 
-		//sin_zero[8] -> no se usa debe ser 0
+
 	public :
 		Bot(void);
 		~Bot(void);
 
 		void	run(void);
-		
+
 		struct sockaddr_in getAddr(void) const;
+		
 		std::string getPass() const;
 		std::string getUser() const;
 		std::string getNick() const;
